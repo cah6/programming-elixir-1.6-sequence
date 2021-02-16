@@ -9,4 +9,8 @@ defmodule Sequence.Server do
   def handle_call(:pop, _from, [x | xs]) do
     {:reply, x, xs}
   end
+
+  def handle_cast({:push, x}, xs) do
+    {:noreply, [x | xs]}
+  end
 end
