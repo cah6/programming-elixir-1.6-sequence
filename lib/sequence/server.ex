@@ -1,7 +1,22 @@
 defmodule Sequence.Server do
   use GenServer
 
-  @spec init(any) :: {:ok, any}
+  ### External API
+
+  def start_link(xs) do
+    GenServer.start_link(__MODULE__, xs, name: __MODULE__)
+  end
+
+  def pop do
+    GenServer.call(__MODULE__, :pop)
+  end
+
+  def push(x) do
+    GenServer.cast(__MODULE__, {:push, x})
+  end
+
+  ### GenServer implementations
+
   def init(xs) do
     {:ok, xs}
   end
