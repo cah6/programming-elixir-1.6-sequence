@@ -2,11 +2,11 @@ defmodule Sequence.Server do
   use GenServer
 
   @spec init(any) :: {:ok, any}
-  def init(initial_number) do
-    {:ok, initial_number}
+  def init(xs) do
+    {:ok, xs}
   end
 
-  def handle_call(:next_number, _from, current_number) do
-    {:reply, current_number, current_number + 1}
+  def handle_call(:pop, _from, [x | xs]) do
+    {:reply, x, xs}
   end
 end
