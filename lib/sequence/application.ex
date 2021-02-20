@@ -10,7 +10,8 @@ defmodule Sequence.Application do
     children = [
       # Starts a worker by calling: Sequence.Worker.start_link(arg)
       # {Sequence.Worker, arg}
-      {Sequence.Server, [1, "cat", 3]}
+      {Sequence.Stash, [1, "cat", 3]},
+      {Sequence.Server, nil}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

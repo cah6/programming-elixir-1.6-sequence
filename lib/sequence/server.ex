@@ -3,8 +3,8 @@ defmodule Sequence.Server do
 
   ### External API
 
-  def start_link(xs) do
-    GenServer.start_link(__MODULE__, xs, name: __MODULE__)
+  def start_link(_) do
+    GenServer.start_link(__MODULE__, nil, name: __MODULE__)
   end
 
   def pop do
@@ -17,8 +17,8 @@ defmodule Sequence.Server do
 
   ### GenServer implementations
 
-  def init(xs) do
-    {:ok, xs}
+  def init(_) do
+    {:ok, Sequence.Stash.get()}
   end
 
   def handle_call(:pop, _from, [x | xs]) do
@@ -27,5 +27,9 @@ defmodule Sequence.Server do
 
   def handle_cast({:push, x}, xs) do
     {:noreply, [x | xs]}
+  end
+
+  def terminate(_reason, st) do
+    Sequence.Stash.update(st)
   end
 end
